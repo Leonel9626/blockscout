@@ -753,11 +753,11 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..2 do
         insert(:internal_transaction,
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index + 1,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         )
       end
@@ -765,11 +765,11 @@ defmodule Explorer.EtherscanTest do
       for index <- 3..5 do
         insert(:internal_transaction,
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         )
       end
@@ -788,11 +788,11 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..2 do
         insert(:internal_transaction,
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index + 1,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         )
       end
@@ -800,11 +800,11 @@ defmodule Explorer.EtherscanTest do
       for index <- 3..5 do
         insert(:internal_transaction,
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         )
       end
@@ -1062,12 +1062,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..3 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1077,12 +1077,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 4..5 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1105,12 +1105,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..3 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1120,12 +1120,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 4..5 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1164,12 +1164,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..3 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1179,12 +1179,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 4..5 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1207,12 +1207,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 0..3 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: 0,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
@@ -1222,12 +1222,12 @@ defmodule Explorer.EtherscanTest do
       for index <- 4..5 do
         internal_transaction_details = %{
           transaction: transaction,
+          transaction_index: transaction.index,
           index: index,
           value: index,
           from_address: address,
           block_number: transaction.block_number,
           block_hash: transaction.block_hash,
-          block_index: index,
           transaction_index: transaction.index
         }
 
