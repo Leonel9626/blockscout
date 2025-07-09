@@ -27,7 +27,14 @@ defmodule Explorer.ChainTest do
 
   alias Explorer.{Chain, Etherscan}
   alias Explorer.Chain.Address.Counters
-  alias Explorer.Chain.Cache.Counters.{BlocksCount, TransactionsCount, PendingBlockOperationCount}
+
+  alias Explorer.Chain.Cache.Counters.{
+    BlocksCount,
+    TransactionsCount,
+    PendingBlockOperationCount,
+    PendingTransactionOperationCount
+  }
+
   alias Explorer.Chain.InternalTransaction.Type
 
   alias Explorer.Chain.Supply.ProofOfAuthority
@@ -561,7 +568,13 @@ defmodule Explorer.ChainTest do
     setup do
       Supervisor.terminate_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
       Supervisor.restart_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
-      on_exit(fn -> Supervisor.terminate_child(Explorer.Supervisor, PendingBlockOperationCount.child_id()) end)
+      Supervisor.terminate_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
+      Supervisor.restart_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
+
+      on_exit(fn ->
+        Supervisor.terminate_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
+        Supervisor.terminate_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
+      end)
     end
 
     test "finished indexing" do
@@ -590,8 +603,12 @@ defmodule Explorer.ChainTest do
       configuration = Application.get_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor)
       Application.put_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor, disabled?: false)
 
+      geth_config = Application.get_env(:ethereum_jsonrpc, EthereumJSONRPC.Geth)
+      Application.put_env(:ethereum_jsonrpc, EthereumJSONRPC.Geth, Keyword.put(geth_config, :block_traceable?, true))
+
       on_exit(fn ->
         Application.put_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor, configuration)
+        Application.put_env(:ethereum_jsonrpc, EthereumJSONRPC.Geth, geth_config)
       end)
 
       refute Chain.finished_indexing_internal_transactions?()
@@ -886,6 +903,8 @@ defmodule Explorer.ChainTest do
     setup do
       Supervisor.terminate_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
       Supervisor.restart_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
+      Supervisor.terminate_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
+      Supervisor.restart_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
       configuration = Application.get_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor)
       Application.put_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor, disabled?: false)
 
@@ -893,6 +912,7 @@ defmodule Explorer.ChainTest do
         Application.put_env(:indexer, :trace_first_block, 0)
         Application.put_env(:indexer, Indexer.Fetcher.InternalTransaction.Supervisor, configuration)
         Supervisor.terminate_child(Explorer.Supervisor, PendingBlockOperationCount.child_id())
+        Supervisor.terminate_child(Explorer.Supervisor, PendingTransactionOperationCount.child_id())
       end)
     end
 
